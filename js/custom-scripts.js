@@ -4,7 +4,7 @@ Author URL: http://webthemez.com
 */
 jQuery(function($) {
     'use strict';
-     
+
     $(window).scroll(function(event) {
         Scroll();
     });
@@ -15,7 +15,7 @@ jQuery(function($) {
         }, 1000);
         return false;
     });
- 
+
     function Scroll() {
         var contentTop = [];
         var contentBottom = [];
@@ -23,8 +23,8 @@ jQuery(function($) {
         var rangeTop = 200;
         var rangeBottom = 500;
         $('.navbar-collapse').find('.scroll a').each(function() {
-            contentTop.push($($(this).attr('href')).offset().top);
-            contentBottom.push($($(this).attr('href')).offset().top + $($(this).attr('href')).height());
+            contentTop.push($($(this).attr('href')).offset().top());
+            contentBottom.push($($(this).attr('href')).offset().top() + $($(this).attr('href')).height());
         })
         $.each(contentTop, function(i) {
             if (winTop > contentTop[i] - rangeTop) {
@@ -42,12 +42,12 @@ jQuery(function($) {
         return false;
     });
 
-  
+
     new WOW().init();
-     
+
     smoothScroll.init();
 
-    
+
     $(window).load(function() {
         'use strict';
         var $portfolio_selectors = $('.portfolio-filter >li>a');
@@ -69,7 +69,7 @@ jQuery(function($) {
     });
 
     $(document).ready(function() {
-   
+
         $.fn.animateNumbers = function(stop, commas, duration, ease) {
             return this.each(function() {
                 var $this = $(this);
@@ -109,10 +109,10 @@ jQuery(function($) {
         });
     });
 
- 
+
     $("a[rel^='prettyPhoto']").prettyPhoto({
         social_tools: false
     });
- 
+
 
 });
