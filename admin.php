@@ -76,8 +76,19 @@ else{
   <div class="container admin">
     <!-- <div class="message"><?php if($message!="") { echo $message; } ?></div> -->
 
-    <h1>Hello Mr. X</h1>
-    <h2>Your plan is: Weekly(Basic)</h2>
+    <?php
+      $users_id = $_SESSION['user_id'];
+      $sql = "SELECT * FROM Users_info WHERE users_id=$users_id ";
+      $result = $conn->query($sql);
+      $row = mysqli_fetch_array($result);
+
+      $sql = "SELECT * FROM Plans WHERE users_id=$users_id ";
+      $result = $conn->query($sql);
+      $row2 = mysqli_fetch_array($result);
+    ?>
+
+    <h1>Hello, <?php echo $row['name'] ?></h1>
+    <h2>Your plan is: <?php echo $row2['plan_name'] ?> </h2>
 
     <hr>
     <h3>Lets start with simple steps: </h3>
