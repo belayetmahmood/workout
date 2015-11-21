@@ -6,6 +6,24 @@ require 'db.php'; ?>
   $user_id = $_SESSION['user_id'];
   // plan
   $plan_name = $_POST['plan_name'];
+  if ($plan_name === 'Weekly') {
+    $duration = 7;
+  }
+  elseif ($plan_name === 'Monthly') {
+    $duration = 30;
+  }
+  elseif ($plan_name === 'Yearly') {
+    $duration = 365;
+  }
+  // $current_date = date("Ymd");
+
+  $current_date = date("Ymd");
+
+
+  // $date=date_create($current_date);
+  // date_add($date,date_interval_create_from_date_string("-5 day"));
+  // $current_date = date_format($date,"Ymd");
+
   // user info
   // $name = $_POST['name'];
   // $address = $_POST['address'];
@@ -19,7 +37,7 @@ require 'db.php'; ?>
     $result = $conn->query($sql);
     $row = mysqli_fetch_array($result);
     if (is_array($row) && !empty($row)) {
-      $sql = "UPDATE Plans SET plan_name='$plan_name' WHERE users_id=$user_id ";
+      $sql = "UPDATE Plans SET plan_name='$plan_name', duration=$duration, start_date=$current_date  WHERE users_id=$user_id ";
       if ($conn->query($sql) === TRUE) {
         echo "Record updated successfully";
         header("Location:profile.php");
@@ -29,7 +47,7 @@ require 'db.php'; ?>
       }
     }
     else {
-      $sql = "INSERT INTO Plans(users_id, plan_name) VALUES($user_id, '$plan_name')";
+      $sql = "INSERT INTO Plans(users_id, plan_name, duration, start_date) VALUES($user_id, '$plan_name', $duration, $start_date)";
       if ($conn->query($sql) === TRUE) {
         echo "Record inserted successfully";
         header("Location:profile.php");
