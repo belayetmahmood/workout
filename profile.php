@@ -81,7 +81,7 @@ else{
 
     <hr>
     <h3>Plan Info: </h3>
-    <form class="" action="profile_handler.php" method="post">
+    <form class="" action="profile_handler_plan.php" method="post">
       <div class="control-group">
         <label class="control-label" for="plan_name">Plan:</label>
         <div class="controls">
@@ -104,7 +104,7 @@ else{
 
     <h3>User Info: </h3>
 
-    <form class="" action="profile_handler.php" method="post">
+    <form class="" action="profile_handler_user_info.php" method="post">
       <div class="control-group">
         <label class="control-label" for="name">Full Name:</label>
         <div class="controls">
