@@ -83,7 +83,7 @@ else{
     <h3>Plan Info: </h3>
     <form class="" action="profile_handler.php" method="post">
       <div class="control-group">
-        <label class="control-label" for="name">Plan:</label>
+        <label class="control-label" for="plan_name">Plan:</label>
         <div class="controls">
           <select class="controls" name="plan_name">
             <option>Weekly</option>
