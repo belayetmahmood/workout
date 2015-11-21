@@ -89,6 +89,27 @@ else{
 
     <h1>Hello, <?php echo $row['name'] ?></h1>
     <h2>Your plan is: <?php echo $row2['plan_name'] ?> </h2>
+    <h3>
+      <?php
+        if($row2['is_completed'] == 1){
+          echo "You have completed this plan!";
+        } else {
+          echo "You have't completed this plan yet";
+        }
+
+        $start_date = $row2['start_date'];
+        $duration = $row2['duration'];
+
+        $date=date_create($start_date);
+        date_add($date,date_interval_create_from_date_string("7 day"));
+        $last_day = date_format($date,"Ymd");
+        $days_left = date('N', strtotime($last_day));
+
+      ?>
+    </h3>
+    <p>
+      You have <?php echo $days_left; ?> days left
+    </p>
 
     <hr>
     <h3>Lets start with simple steps: </h3>
@@ -96,19 +117,19 @@ else{
       <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
         <div class="row">
             <div class="progress" id="progress1">
-                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
                 </div>
-                <span class="progress-type">Overall Progress</span>
-                <span class="progress-completed">20%</span>
+                <span class="progress-type">Progress</span>
+                <span class="progress-completed">0%</span>
             </div>
         </div>
         <div class="row">
             <div class="row step">
-                <div id="div1" class="col-md-2" onclick="javascript: resetActive(event, 0, 'step-1');">
+                <div id="div1" class="col-md-2 activestep" onclick="javascript: resetActive(event, 0, 'step-1');">
                     <span class="fa fa-thumbs-up"></span>
                     <p>Download Application</p>
                 </div>
-                <div class="col-md-2 activestep" onclick="javascript: resetActive(event, 20, 'step-2');">
+                <div class="col-md-2" onclick="javascript: resetActive(event, 20, 'step-2');">
                     <span class="fa fa-pencil"></span>
                     <p>Fill out</p>
                 </div>
@@ -130,7 +151,7 @@ else{
                 </div>
             </div>
         </div>
-        <div class="row setup-content step hiddenStepInfo" id="step-1">
+        <div class="row setup-content step activeStepInfo" id="step-1">
             <div class="col-xs-12">
                 <div class="col-md-12 well text-center">
                     <h1>STEP 1</h1>
@@ -151,55 +172,134 @@ else{
 
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/g93SpZylCD4" frameborder="0" allowfullscreen></iframe>
                 </div>
+                <button  class="btn btn-success pull-right" onclick="javascript: resetActive(event, 20, 'step-2');">Proceed to Next Step </button>
+                <!-- <form class="" action="progress_step.php" method="post">
+                  <input type="hidden" name="progress" value="1">
+                  <button id="progress" class="btn btn-success pull-right">Submit</button>
+                </form> -->
             </div>
         </div>
-        <div class="row setup-content step activeStepInfo" id="step-2">
+        <div class="row setup-content step hiddenStepInfo" id="step-2">
             <div class="col-xs-12">
-                <div class="col-md-12 well text-center">
-                    <h1>STEP 2</h1>
-                    <h3 class="underline">Instructions</h3>
-                    Fill out the application.
-                    Make sure to leave no empty fields.
-                </div>
+                <?php
+
+                  if($days_left <= 5){
+                    ?>
+                    <div class="col-md-12 well text-center">
+                        <h1>STEP 2</h1>
+                        <h3 class="underline">Instructions</h3>
+                        Fill out the application.
+                        Make sure to leave no empty fields.
+                    </div>
+                    <button  class="btn btn-success pull-right" onclick="javascript: resetActive(event, 40, 'step-3');">Proceed to Next Step </button>
+                    <?php
+                  }
+                  else{
+                    ?>
+                    <h3>Please complete previous day or wait for the next day</h3>
+                    <?php
+                  }
+
+                 ?>
             </div>
         </div>
         <div class="row setup-content step hiddenStepInfo" id="step-3">
             <div class="col-xs-12">
-                <div class="col-md-12 well text-center">
-                    <h1>STEP 3</h1>
-                    <h3 class="underline">Instructions</h3>
-                    Check to ensure that all data entered is valid.
-                </div>
+              <?php
+
+                if($days_left <= 4){
+                  ?>
+                  <div class="col-md-12 well text-center">
+                      <h1>STEP 3</h1>
+                      <h3 class="underline">Instructions</h3>
+                      Check to ensure that all data entered is valid.
+                  </div>
+                  <button  class="btn btn-success pull-right" onclick="javascript: resetActive(event, 60, 'step-4');">Proceed to Next Step </button>
+                  <?php
+                }
+                else{
+                  ?>
+                  <h3>Please complete previous day or wait for the next day</h3>
+                  <?php
+                }
+
+               ?>
+
             </div>
         </div>
         <div class="row setup-content step hiddenStepInfo" id="step-4">
             <div class="col-xs-12">
-                <div class="col-md-12 well text-center">
-                    <h1>STEP 4</h1>
-                    <h3 class="underline">Instructions</h3>
-                    Pay the application fee.
-                    This can be done either by entering your card details, or by using Paypal.
-                </div>
+              <?php
+
+                if($days_left <= 3){
+                  ?>
+                  <div class="col-md-12 well text-center">
+                      <h1>STEP 4</h1>
+                      <h3 class="underline">Instructions</h3>
+                      Pay the application fee.
+                      This can be done either by entering your card details, or by using Paypal.
+                  </div>
+                  <button  class="btn btn-success pull-right" onclick="javascript: resetActive(event, 80, 'step-5');">Proceed to Next Step </button>
+                  <?php
+                }
+                else{
+                  ?>
+                  <h3>Please complete previous day or wait for the next day</h3>
+                  <?php
+                }
+
+               ?>
+
             </div>
         </div>
         <div class="row setup-content step hiddenStepInfo" id="step-5">
             <div class="col-xs-12">
-                <div class="col-md-12 well text-center">
-                    <h1>STEP 5</h1>
-                    <h3 class="underline">Instructions</h3>
-                    Upload the application.
-                    This may require a confirmation email.
-                </div>
+              <?php
+
+                if($days_left <= 2){
+                  ?>
+                  <div class="col-md-12 well text-center">
+                      <h1>STEP 5</h1>
+                      <h3 class="underline">Instructions</h3>
+                      Upload the application.
+                      This may require a confirmation email.
+                  </div>
+                  <button class="btn btn-success pull-right" onclick="javascript: resetActive(event, 100, 'step-6');">Proceed to Next Step </button>
+                  <?php
+                }
+                else{
+                  ?>
+                  <h3>Please complete previous day or wait for the next day</h3>
+                  <?php
+                }
+
+               ?>
+
             </div>
         </div>
         <div class="row setup-content step hiddenStepInfo" id="step-6">
             <div class="col-xs-12">
-                <div class="col-md-12 well text-center">
-                    <h1>STEP 6</h1>
-                    <h3 class="underline">Instructions</h3>
-                    Send us feedback on the overall process.
-                    This step is not obligatory.
-                </div>
+              <?php
+
+                if($days_left <= 1){
+                  ?>
+                  <div class="col-md-12 well text-center">
+                      <h1>STEP 6</h1>
+                      <h3 class="underline">Instructions</h3>
+                      Send us feedback on the overall process.
+                      This step is not obligatory.
+                  </div>
+                  <button id="submit_complete" class="btn btn-success pull-right" onclick="">Complete Process </button>
+                  <?php
+                }
+                else{
+                  ?>
+                  <h3>Please complete previous day or wait for the next day</h3>
+                  <?php
+                }
+
+               ?>
+
             </div>
         </div>
     </div>
@@ -240,6 +340,20 @@ else{
 <script src="js/wow.min.js"></script>
 <script src="js/custom-scripts.js"></script>
 <script type="text/javascript">
+
+  $(document).ready(function(){
+    $('#submit_complete').click(function(){
+      $.ajax({
+        method: "POST",
+        url: "test.php",
+        data: { is_complete: 1 }
+      }).done(function( msg ) {
+          alert( "Data Saved: " + msg );
+        });})
+  });
+
+
+
   $('.carousel').carousel({
     interval: 5000 //changes the speed
   })
