@@ -124,91 +124,33 @@
         </div>
         <div class="tab-pane fade" id="signup">
             <form class="form-horizontal" method="POST" action="register.php">
-            <fieldset>
-            <!-- Sign Up Form -->
-            <!-- Text input-->
-            <!-- <div class="control-group">
-              <label class="control-label" for="name">Name:</label>
-              <div class="controls">
-                <input id="name" name="name" class="form-control" type="text" placeholder="Bela" class="input-large">
-              </div>
-            </div> -->
+                <fieldset>
 
-            <div class="control-group">
-              <label class="control-label" for="Email">Email:</label>
-              <div class="controls">
-                <input id="Email" name="email" class="form-control" type="text" placeholder="bela@ex.com" class="input-large" required="">
-              </div>
-            </div>
+                <div class="control-group">
+                  <label class="control-label" for="Email">Email:</label>
+                  <div class="controls">
+                    <input id="Email" name="email" class="form-control" type="text" placeholder="bela@ex.com" class="input-large" required="">
+                  </div>
+                </div>
 
-            <!-- Password input-->
-            <div class="control-group">
-              <label class="control-label" for="password">Password:</label>
-              <div class="controls">
-                <input id="password" name="password" class="form-control" type="password" placeholder="********" class="input-large" required="">
-                <em>1-8 Characters</em>
-              </div>
-            </div>
-
-            <!-- <div class="control-group">
-              <label class="control-label" for="name">Address:</label>
-              <div class="controls">
-                <input id="address" name="address" class="form-control" type="text" placeholder="" class="input-large">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="name">Phone:</label>
-              <div class="controls">
-                <input id="phone" name="phone" class="form-control" type="text" placeholder="" class="input-large">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="name">Weight:</label>
-              <div class="controls">
-                <input id="weight" name="weight" class="form-control" type="text" placeholder="" class="input-large">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="name">Height:</label>
-              <div class="controls">
-                <input id="height" name="height" class="form-control" type="text" placeholder="" class="input-large">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="name">Plan:</label>
-              <div class="controls">
-                <select class="controls" name="plan_name">
-                  <option>Weekly</option>
-                  <option>Monthly</option>
-                  <option>Yearly</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="users_desc">Users Desc:</label>
-              <div class="controls">
-                <input id="users_desc" name="users_desc" class="form-control" type="textarea" placeholder="" rows=6 class="input-large">
-              </div>
-            </div> -->
+                <!-- Password input-->
+                <div class="control-group">
+                  <label class="control-label" for="password">Password:</label>
+                  <div class="controls">
+                    <input id="password" name="password" class="form-control" type="password" placeholder="********" class="input-large" required="">
+                    <em>1-8 Characters</em>
+                  </div>
+                </div>
 
 
-
-
-
-
-            <!-- Button -->
-            <div class="control-group">
-              <label class="control-label" for="confirmsignup"></label>
-              <div class="controls">
-                <button id="confirmsignup" name="confirmsignup" class="btn btn-success">Sign Up</button>
-              </div>
-            </div>
-            </fieldset>
+                <!-- Button -->
+                <div class="control-group">
+                  <label class="control-label" for="confirmsignup"></label>
+                  <div class="controls">
+                    <button id="confirmsignup" name="confirmsignup" class="btn btn-success">Sign Up</button>
+                  </div>
+                </div>
+                </fieldset>
             </form>
       </div>
     </div>
@@ -850,7 +792,7 @@
       </div>
       <div class="row">
           <?php
-            $user_id = $_SESSION['user_id'];
+            // $user_id = $_SESSION['user_id'];
 
 
 
