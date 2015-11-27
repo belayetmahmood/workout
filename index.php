@@ -1,4 +1,4 @@
-<?php session_start(); echo var_dump($_SESSION); ?>
+<?php session_start(); ?>
 <?php require 'db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +14,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/animate.min.css" rel="stylesheet">
   <link href="css/prettyPhoto.css" rel="stylesheet">
+  <link href="css/dp.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -274,21 +275,7 @@
 
   </header>
 
-  <!-- <section id="hero-banner">
-             <div class="banner-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
 
-                                    <h2>Stronger than <b>EVER</b></h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisici <br/> Praesent eget risus.</p>
-                                    <a class="btn btn-primary btn-lg" href="#">Start Now</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    </section> -->
 
   <section id="services">
     <div class="container">
@@ -648,7 +635,7 @@
                 <strong>10</strong> EMAIL ADDRESS</li>
               <li>
                 <strong>24/7</strong> SUPPORT</li>
-              <li class="plan-purchase"><a class="btn btn-primary" href="#">Get It Now!</a></li>
+              <li class="plan-purchase"><a class="btn btn-primary" data-toggle="modal" data-target="#price_modal">Get It Now!</a></li>
             </ul>
           </div>
         </div>
@@ -753,6 +740,54 @@
   </section>
   <!--/#pricing-->
 
+  <!-- Modal -->
+<div class="modal fade" id="price_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-body payment">
+        <h1>Give your payment info</h1>
+        <h2>Total: 45$</h2>
+
+        <form class="form-horizontal" action="payment.php" method="POST">
+            <fieldset>
+                <div class="control-group">
+                  <label class="control-label" for="credit">Credit Card No:</label>
+                  <div class="controls">
+                    <input required id="credit" name="credit" type="" class="form-control" placeholder="" class="input-medium">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="ex_date">Expire Date:</label>
+                  <div class="controls">
+                    <input required id="ex_date" name="ex_date" type="date" class="form-control" placeholder="" class="input-medium">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="pin">3 digit pin:</label>
+                  <div class="controls">
+                    <input required id="pin" name="pin" type="text" class="form-control" placeholder="" class="input-medium">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="signin"></label>
+                  <div class="controls">
+                    <button id="signin" name="signin" class="btn btn-success">Sign In</button>
+                  </div>
+                </div>
+            </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+          <center>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </center>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
   <section id="business-stats">
@@ -762,29 +797,40 @@
         <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa
           <br> semper aliquam quis mattis quam.</p>
       </div>
+      <?php
+        // count reg users
+        $sql = "SELECT COUNT(id) FROM Users";
+        $result = $conn->query($sql);
+        $users = mysqli_fetch_array($result);
 
+        // count completed users
+        $sql = "SELECT COUNT(id) FROM Plans WHERE is_completed=1";
+        $result = $conn->query($sql);
+        $success = mysqli_fetch_array($result);
+
+      ?>
       <div class="row text-center">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="0ms">
-            <div class="business-stats" data-digit="6850" data-duration="1000"></div>
+            <div class="business-stats" data-digit="<?php echo $users[0]; ?>" data-duration="1000"></div>
             <strong>Clients</strong>
           </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="100ms">
-            <div class="business-stats" data-digit="1465" data-duration="1000"></div>
+            <div class="business-stats" data-digit="5" data-duration="1000"></div>
             <strong>Trainer</strong>
           </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="200ms">
-            <div class="business-stats" data-digit="4325" data-duration="1000"></div>
+            <div class="business-stats" data-digit="4" data-duration="1000"></div>
             <strong>Programs</strong>
           </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="300ms">
-            <div class="business-stats" data-digit="2568" data-duration="1000"></div>
+            <div class="business-stats" data-digit="<?php echo $success[0]; ?>" data-duration="1000"></div>
             <strong>Successes</strong>
           </div>
         </div>
@@ -792,6 +838,7 @@
     </div>
   </section>
   <!--/#business-stats-->
+
 
 
   <section class="testimonial-area" id="testimonial">
@@ -802,73 +849,68 @@
           <br> semper aliquam quis mattis quam.</p>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
-            <div class="row">
-              <div class="col-xs-12">
-                <blockquote>Sontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3">
-                <img src="images/pic1.jpg" alt="client">
-              </div>
-              <div class="col-xs-9 half-gutter">
-                <h5>John Bond</h5>
-                <h6>Lorem Ipsuis simply</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
-            <div class="row">
-              <div class="col-xs-12">
-                <blockquote>Tontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3">
-                <img src="images/pic2.jpg" alt="client">
-              </div>
-              <div class="col-xs-9 half-gutter">
-                <h5>John Bond</h5>
-                <h6>Lorem Ipsuis simply</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
-            <div class="row">
-              <div class="col-xs-12">
-                <blockquote>Aontrary to popular belief, Lorem Ipsuis no simply random text. It has roots in a piece of classical Layears old. belief, Lorem Ipsuis not simply</blockquote>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-3">
-                <img src="images/pic1.jpg" alt="client">
-              </div>
-              <div class="col-xs-9 half-gutter">
-                <h5>John Bond</h5>
-                <h6>Lorem Ipsuis simply</h6>
-              </div>
-            </div>
-          </div>
-        </div>
+          <?php
+            $user_id = $_SESSION['user_id'];
+
+
+
+            $sql = "SELECT Feedback.fback, Feedback.added, Users_info.name
+                    FROM Feedback
+                    INNER JOIN Users_info
+                    ON Feedback.user_id=Users_info.users_id
+                    ORDER BY Feedback.added DESC;
+            ";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                // output data of each row
+                for($i = 0; $i<3; $i++) {
+                    $row = $result->fetch_assoc();
+                    ?>
+
+                    <div class="col-md-4">
+                      <div class="single-testimonial animate_fade_in" style="opacity: 1; right: 0px;">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <blockquote><?php echo $row['fback']; ?></blockquote>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-9 half-gutter text-center">
+                            <h5><?php echo $row['name']; ?></h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <?php
+                        //echo "<pre>".var_dump($row)."</pre>";
+                     ?>
+
+
+                    <?php
+
+                }
+            } else {
+                echo "0 results";
+            }
+          ?>
+
       </div>
     </div>
   </section>
   <section id="contact-us">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title wow fadeInDown">Contact Us</h2>
-        <p class="wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget risus vitae massa
-          <br> semper aliquam quis mattis quam.</p>
+        <h2 class="section-title wow fadeInDown">Stay Connected</h2>
+        <p class="wow fadeInDown">Give us your valuable feedback. For any other need contact with us. </p>
       </div>
     </div>
   </section>
   <!--/#contact-us-->
+
+
+
 
 
   <section id="contact">
@@ -881,31 +923,22 @@
               <h3>Contact Info</h3>
 
               <address>
-                <strong>Amazing Company, Inc.</strong>
-                <br> 12345 NewYork, Street 125
-                <br> United States 94107
-                <br>
-                <abbr title="Phone">P:</abbr> (123) 456-7890
+                <strong>Mack Inc.</strong>
+                <br> Mohakhali
+                <br> Dhaka
+                <br>BRACU
+                <abbr title="Phone">P:</abbr> 07192120155
               </address>
             </div>
           </div>
           <div class="col-sm-8 col-md-8">
             <div class="contact-form">
 
-              <form id="main-contact-form" name="contact-form" method="post" action="#">
+              <form id="main-contact-form" name="contact-form" method="post" action="feedback.php">
                 <div class="form-group">
-                  <input type="text" name="name" class="form-control" placeholder="Name" required>
+                  <textarea name="message" class="form-control" rows="8" placeholder="Your Message" required></textarea>
                 </div>
-                <div class="form-group">
-                  <input type="email" name="email" class="form-control" placeholder="Email" required>
-                </div>
-                <div class="form-group">
-                  <input type="text" name="subject" class="form-control" placeholder="Subject" required>
-                </div>
-                <div class="form-group">
-                  <textarea name="message" class="form-control" rows="8" placeholder="Message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
+                <button type="submit" class="btn btn-primary">Send Feedback</button>
               </form>
             </div>
           </div>
@@ -919,7 +952,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-6">
-          &copy; 2015 Company Name. Template by <a target="_blank" href="http://webthemez.com/" title="Free Bootstrap Themes and HTML Templates">WebThemez.com</a>
+            (c) 2015 No Copyright | Develpoed by: Belayat Mahmood
         </div>
         <div class="col-sm-6">
           <ul class="social-icons">
@@ -947,10 +980,12 @@
   <script src="js/jquery.inview.min.js"></script>
   <script src="js/wow.min.js"></script>
   <script src="js/custom-scripts.js"></script>
+
   <script type="text/javascript">
     $('.carousel').carousel({
       interval: 5000 //changes the speed
-    })
+    });
+
   </script>
 </body>
 

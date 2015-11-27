@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,700,500);
+@import url('http://www.urimalo.com/assets/admin/plugins/bootstrap-datepicker/css/datepicker.css');
 /*
 Author: webthemez.com
 Author URL: http://webthemez.com
@@ -1082,6 +1083,10 @@ padding: 7px 0 0;
     font-size: 40px;
 }
 
+
+.payment {
+    max-height: 400px;
+}
 
 /**/
 .float-shadow {
